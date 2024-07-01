@@ -1,0 +1,48 @@
+version: "3.7"
+
+volumes:
+  sqlserver_data:
+
+services:
+  app:
+    container_name: app
+    ports:
+      - "23456:23456"
+    build:
+      context: .
+      dockerfile: PrintersManager/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:23456
+  # Never done something like this for sql server, so mostly copied from https://stackoverflow.com/a/76258060/19384730
+  # I do understand basics of what is happening here, but if I had more time I would do something with proper migrations
+  # instead of just init sql script.
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=1SBTiBOFBxF3lB
+      - MSSQL_PID=Developer
+    ports:
+      - 1433:1433
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 1SBTiBOFBxF3lB -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 3s
+  sqlserver.configurator:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    volumes:
+      - ./Database/init:/docker-entrypoint-initdb.d
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    command: >
+      bash -c '
+      /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P 1SBTiBOFBxF3lB -d master -i docker-entrypoint-initdb.d/start_database.sql;
+      echo "All done!";
+      '
