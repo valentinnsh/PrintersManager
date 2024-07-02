@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using PrintersManager.Services;
 
@@ -14,17 +15,9 @@ public class EmployeesController: Controller
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAllOrders()
+    public async Task<IActionResult> GetAllEmployeesAsync()
     {
-        // TODO: Handle exceptions through middleware
-        try
-        {
-            var employees = await _employeesService.GetEmployeesAsync();
-            return Ok(employees);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"{ex} An error occurred while retrieving printers.");
-        }
+        var employees = await _employeesService.GetEmployeesAsync();
+        return Ok(employees);
     }
 }

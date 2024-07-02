@@ -14,17 +14,9 @@ public class BranchesController: Controller
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAllOrders()
+    public async Task<IActionResult> GetAllBranchesAsync()
     {
-        // TODO: Handle exceptions through middleware
-        try
-        {
-            var branches = await _branchesService.GetBranchesAsync();
-            return Ok(branches);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"{ex} An error occurred while retrieving printers.");
-        }
+        var branches = await _branchesService.GetBranchesAsync();
+        return Ok(branches);
     }
 }

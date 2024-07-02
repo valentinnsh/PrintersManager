@@ -1,11 +1,16 @@
 using Database;
 using Microsoft.EntityFrameworkCore;
+using PrintersManager.Exceptions;
 using PrintersManager.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<PrintersDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
+
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
+builder.Services.AddExceptionHandler<PrintersManagerExceptionHandler>();
 
 builder.Services.AddControllers();
 
@@ -28,6 +33,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler(); 
 
 app.UseHttpsRedirection();
 

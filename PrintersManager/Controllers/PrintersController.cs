@@ -16,18 +16,10 @@ public class PrintersController: Controller
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAllOrders([FromQuery] int? connectionType = null)
+    public async Task<IActionResult> GetAllPrinters([FromQuery] int? connectionType = null)
     {
-        // TODO: Handle exceptions through middleware
-        try
-        {
-            var printers = await _printersService.GetPrintersAsync(connectionType is null
-                ? null : (ConnectionTypes)connectionType);
-            return Ok(printers);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"{ex} An error occurred while retrieving printers.");
-        }
+        var printers = await _printersService.GetPrintersAsync(connectionType is null
+            ? null : (ConnectionTypes)connectionType);
+        return Ok(printers);
     }
 }
