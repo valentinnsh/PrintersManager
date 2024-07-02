@@ -1,8 +1,6 @@
 using Database;
 using Database.Entities;
-using Database.Records;
 using Microsoft.EntityFrameworkCore;
-using PrintersManager.Models;
 
 namespace PrintersManager.Services;
 

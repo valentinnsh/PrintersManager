@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Database.Records;
 
-public class PrinterRecord
+public class BranchRecord
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -11,8 +11,6 @@ public class PrinterRecord
     public int Id { get; set; }
     [Column("name")]
     public string Name { get; set; }
-    [Column("connection_type")]
-    public ConnectionTypes ConnectionType { get; set; }
-    [Column("mac")]
-    public string? MAC { get; set; }
+    [Column("location")]
+    public string Location { get; set; }
 }

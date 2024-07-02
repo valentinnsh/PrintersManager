@@ -15,6 +15,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IPrintersService, PrintersService>();
+builder.Services.AddScoped<IEmployeesService, EmployeesService>();
+builder.Services.AddScoped<IBranchesService, BranchesService>();
+
+
 
 var app = builder.Build();
 
@@ -29,6 +33,6 @@ app.UseHttpsRedirection();
 
 app.MapControllerRoute(
     name: "api",
-    pattern: "api/{controller=Printers}/{action}");
+    pattern: "api/{controller}/{action}");
 
 app.Run();
