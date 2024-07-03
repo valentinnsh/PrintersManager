@@ -21,7 +21,7 @@ public class BranchesService : IBranchesService
     
     public async Task<IEnumerable<GetBranchesResponse>> GetBranchesAsync(CancellationToken token = default)
     {
-        var branchEntities = _db.Branchs;
+        var branchEntities = _db.Branches;
         return await branchEntities.Select(entity => new GetBranchesResponse
         {
             Name = entity.Name, Location = entity.Location

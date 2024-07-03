@@ -21,7 +21,9 @@ public class PrintersDbContext : DbContext
         var employees = modelBuilder.Entity<EmployeeEntity>().ToTable("employees");
         var branches = modelBuilder.Entity<BranchEntity>().ToTable("branches");
         var installations = modelBuilder.Entity<InstallationEntity>().ToTable("installations");
-
+        installations.Property(i => i.ExternalId).ValueGeneratedOnAdd();
+        installations.Property(i => i.IsDefault).HasColumnType("bit");
+        
         printers.HasMany(printer => printer.Installations)
             .WithOne(installation => installation.Printer)
             .HasForeignKey(installation => installation.PrinterId)
@@ -40,7 +42,7 @@ public class PrintersDbContext : DbContext
     
     public IQueryable<PrinterEntity> Printers => Set<PrinterEntity>();
     public IQueryable<EmployeeEntity> Employees => Set<EmployeeEntity>();
-    public IQueryable<BranchEntity> Branchs => Set<BranchEntity>();
+    public IQueryable<BranchEntity> Branches => Set<BranchEntity>();
     public IQueryable<InstallationEntity> Installations => Set<InstallationEntity>();
 
 }

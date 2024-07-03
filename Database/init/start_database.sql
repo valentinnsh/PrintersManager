@@ -18,8 +18,9 @@ GO
 
 CREATE TABLE installations (
     id INT IDENTITY(1,1) PRIMARY KEY,
+    external_id UNIQUEIDENTIFIER NOT NULL,
     local_name NVARCHAR(100) NOT NULL,
-    local_number INT NOT NULL,
+    local_number TINYINT NOT NULL,
     is_default BIT NOT NULL,
     printer_id INT NOT NULL,
     branch_id INT NOT NULL,
@@ -81,12 +82,12 @@ VALUES
     (N'Копатыч', 3);
 GO
 
-INSERT INTO [installations] (local_name, local_number, is_default, printer_id, branch_id)
+INSERT INTO [installations] (local_name, local_number, is_default, printer_id, branch_id, external_id)
 VALUES
-    (N'Дворец', 1, 1, 1, 1),
-    (N'Конюшни', 2, 0, 3, 1),
-    (N'Оружейная', 3, 0, 3, 1),
-    (N'Кратер', 1, 1, 2, 3),
-    (N'Избушка', 3, 0, 3, 2),
-    (N'Топи', 2, 1, 1, 2);
+    (N'Дворец', 1, 1, 1, 1, NEWID()),
+    (N'Конюшни', 2, 0, 3, 1, NEWID()),
+    (N'Оружейная', 3, 0, 3, 1, NEWID()),
+    (N'Кратер', 1, 1, 2, 3, NEWID()),
+    (N'Избушка', 3, 0, 3, 2, NEWID()),
+    (N'Топи', 2, 1, 1, 2, NEWID());
 GO

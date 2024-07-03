@@ -22,6 +22,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPrintersService, PrintersService>();
 builder.Services.AddScoped<IEmployeesService, EmployeesService>();
 builder.Services.AddScoped<IBranchesService, BranchesService>();
+builder.Services.AddScoped<IInstallationsService, InstallationsService>();
+
 
 
 
